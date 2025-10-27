@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block titulo %}{{ instrumento.nombre }} | Proveedores{% endblock %}
+
+{% block contenido %}
+<article class="artist-detail">
+    <div class="artist-banner">
+        {% if instrumento.foto_instrumento %}
+            <img src="{{ instrumento.foto_instrumento.url }}" alt="Foto de {{ instrumento.nombre }}" class="detail-photo">
+        {% else %}
+            <div class="detail-placeholder">👤</div>
+        {% endif %}
+        <div class="artist-info">
+            <h1>{{ instrumento.nombre }}</h1>
+            <h3>{{ instrumento.marca }}</h3>
+            <h3>{{ instrumento.precio_venta }}</h3>
+            <h3>{{ instrumento.categoria }}</h3>
+        </div>
+    </div>
+
+    <div class="detail-actions">
+        <a href="{% url 'app_instrumentos:editar_instrumento' instrumento.id %}" class="btn btn-secondary">✏️ Editar</a>
+        <a href="{% url 'app_instrumentos:borrar_instrumento' instrumento.id %}" class="btn btn-danger">🗑️ Borrar</a>
+    </div>
+
+    <section class="songs-section">
+        <h2>Proveedores</h2>
+        {% if instrumento.proveedor_set.all %}
+        <ul class="song-list">
+            {% for proveedor in instrumento.proveedor_set.all %}
+            <li>{{ proveedor.nombre_empresa }}</li>
+            <li>{{ proveedor.telefono }}</li>
+            <li>{{ proveedor.email }}</li>
+            <li>{{ proveedor.id_instrumento }}</li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p class="empty-message">Este instrumento no tiene proveedores registrados.</p>
+        {% endif %}
+    </section>
+</article>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block titulo %}Instrumentos | Proveedores{% endblock %}
+
+{% block contenido %}
+<div class="page-header">
+    <h2>Instrumentos Registrados</h2>
+    <a href="{% url 'app_instrumentos:crear_instrumento' %}" class="btn btn-primary">+ Agregar Instrumento</a>
+</div>
+
+<ul class="artist-grid">
+    {% for instrumento in instrumentos %}
+    <li class="artist-card">
+        <a href="{% url 'app_instrumentos:detalle_instrumento' instrumento.id %}">
+            {% if instrumento.foto_instrumento %}
+                <img src="{{ instrumento.foto_instrumento.url }}" alt="Foto de {{ instrumento.nombre }}" class="artist-img">
+            {% else %}
+                <div class="artist-placeholder">🎵</div>
+            {% endif %}
+            <h3>{{ instrumento.nombre }}</h3>
+            <p class="artist-nationality">{{ instrumento.marca }}</p>
+            <p class="artist-nationality">{{ instrumento.modelo }}</p>
+            <p class="artist-nationality">{{ instrumento.marca }}</p>
+            <p class="artist-nationality">{{ instrumento.precio_venta }}</p>
+            <p class="artist-nationality">{{ instrumento.categoria }}</p>
+        </a>
+    </li>
+    {% empty %}
+    <li class="no-artists">No hay instrumentos registrados.</li>
+    {% endfor %}
+</ul>
+{% endblock %}
